@@ -1,483 +1,519 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2665.8">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #a7c598; -webkit-text-stroke: #a7c598}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s4 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s5 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s6 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s7 {font-kerning: none}
-    span.s8 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s9 {font-kerning: none; color: #71c083; background-color: #171818; -webkit-text-stroke: 0px #71c083}
-    span.s10 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-    span.s11 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s12 {font-kerning: none; color: #f67c30; background-color: #171818; -webkit-text-stroke: 0px #f67c30}
-    span.s13 {font-kerning: none; color: #36c0a0; background-color: #171818; -webkit-text-stroke: 0px #36c0a0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두잉굿 | 인터랙티브 인포그래픽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #00A9B7; /* Teal from logo */
+            --color-accent1: #D9007E; /* Magenta from logo */
+            --color-accent2: #FFC700; /* Yellow from logo */
+        }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+        }
+        .gradient-text {
+            color: var(--color-primary);
+        }
+        .accent-text {
+            color: var(--color-accent1);
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #e5e7eb;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .icon-bg {
+            background-color: #E0F7FA; /* Light Teal */
+            color: var(--color-primary);
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            width: 4px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        .timeline-item {
+            position: relative;
+            width: 100%;
+            padding-left: 3rem;
+            padding-right: 3rem;
+            z-index: 1;
+        }
+         .timeline-item-content {
+            position: relative;
+            width: calc(50% - 2.5rem);
+        }
+        .timeline-item:nth-child(odd) .timeline-item-content {
+            left: 0;
+            padding-right: 1.5rem;
+            text-align: right;
+        }
+        .timeline-item:nth-child(even) .timeline-item-content {
+            left: calc(50% + 2.5rem);
+            padding-left: 1.5rem;
+            text-align: left;
+        }
+         .timeline-dot {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: white;
+            border: 4px solid var(--color-primary);
+            z-index: 2;
+        }
+        .timeline-item:hover .timeline-dot {
+             background-color: var(--color-accent2);
+        }
+        @media (max-width: 767px) {
+            .timeline::before {
+                left: 1.5rem;
+            }
+            .timeline-item {
+                padding-left: 4rem;
+                 padding-right: 0;
+            }
+            .timeline-item-content {
+                 width: 100%;
+                 text-align: left !important;
+                 left: 0 !important;
+                 padding-left: 0 !important;
+                 padding-right: 0 !important;
+            }
+             .timeline-dot {
+                left: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"ko"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">한국창의코딩대회 2025 | 도안/세종러닝센터</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"favicon"</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"icon"</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"image/png"</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">""</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.gstatic.com"</span><span class="s4"> </span><span class="s2">crossorigin</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&amp;display=swap"</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Chosen Palette: Doan Learning Center Logo Theme --&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Application Structure Plan: 이 SPA는 사용자가 정보를 단계적으로 발견하도록 설계된 단일 스크롤 페이지입니다. 'Hero 섹션'에서 즉각적으로 주제를 인지시키고, '핵심 정보 대시보드'에서 가장 중요한 정보를 빠르게 전달합니다. 그 다음 '대회 종목 둘러보기' 섹션에서 사용자가 필터를 통해 직접 자신에게 맞는 종목을 찾도록 유도하며, 각 종목 카드를 클릭하면 화면 중앙으로 확대되는 애니메이션과 함께 상세 정보가 나타나도록 구현했습니다. 마지막으로 '대회 일정 타임라인'과 '특별 기회' 섹션을 통해 세부 정보를 시각적으로 전달합니다. 이 구조는 정적인 문서를 읽는 것보다 훨씬 더 능동적이고 흥미로운 정보 탐색 경험을 제공하기 위해 채택되었습니다. --&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Visualization &amp; Content Choices:<span class="Apple-converted-space"> </span></span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>- 핵심 정보 (날짜, 장소 등): Goal: Inform -&gt; Viz: 아이콘과 큰 텍스트를 사용한 카드, 스크롤 애니메이션 적용 -&gt; Justification: 가장 중요한 정보를 빠르고 쉽게, 그리고 동적으로 인식할 수 있음. Method: HTML/Tailwind/JS.</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>- 대회 종목 목록: Goal: Organize/Explore -&gt; Viz: 필터링 가능한 카드 목록. 클릭 시 화면 중앙으로 확대되며 상세 정보 표시 -&gt; Justification: 클릭 인터랙션에 세련된 애니메이션을 적용하여 사용자의 흥미를 유발하고, 정보 탐색 경험을 극대화함. Method: HTML/Tailwind/JS.</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>- 대회 일정: Goal: Change (over time) -&gt; Viz: 수직 타임라인, 스크롤 애니메이션 적용 -&gt; Justification: 이틀간의 이벤트 순서를 시각적으로 흥미롭게 전달함. Method: HTML/Tailwind/JS.</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>- CONFIRMATION: NO SVG/Mermaid used.</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">    </span>--&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s9">'Noto Sans KR'</span><span class="s8">,</span><span class="s1"> </span><span class="s5">sans-serif</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #fefae0</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #264653</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.gradient-text</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s5">linear-gradient(</span><span class="s10">90deg</span><span class="s8">,</span><span class="s1"> #2a9d8f</span><span class="s8">,</span><span class="s1"> #e76f51</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">-webkit-background-clip:</span><span class="s4"> </span><span class="s5">text</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">-webkit-text-fill-color:</span><span class="s4"> </span><span class="s5">transparent</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.animated-item</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">opacity</span><span class="s4"> </span><span class="s10">0.6s</span><span class="s4"> </span><span class="s1">ease-out</span><span class="s8">,</span><span class="s4"> </span><span class="s1">transform</span><span class="s4"> </span><span class="s10">0.6s</span><span class="s4"> </span><span class="s1">ease-out</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">0</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s5">translateY(</span><span class="s10">20px</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.animated-item.is-visible</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">1</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s5">translateY(</span><span class="s10">0</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.event-card</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">transform</span><span class="s4"> </span><span class="s10">0.3s</span><span class="s4"> </span><span class="s1">ease</span><span class="s8">,</span><span class="s4"> </span><span class="s1">box-shadow</span><span class="s4"> </span><span class="s10">0.3s</span><span class="s4"> </span><span class="s1">ease</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s5">pointer</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.event-card:hover</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s5">translateY(</span><span class="s10">-5px</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">10px</span><span class="s4"> </span><span class="s1">15px</span><span class="s4"> </span><span class="s1">-3px</span><span class="s4"> </span><span class="s5">rgba(</span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0.1</span><span class="s5">)</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">4px</span><span class="s4"> </span><span class="s1">6px</span><span class="s4"> </span><span class="s1">-2px</span><span class="s4"> </span><span class="s5">rgba(</span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0</span><span class="s8">,</span><span class="s4"> </span><span class="s1">0.05</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.filter-btn.active</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #2a9d8f</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#modal-backdrop</span><span class="s8">,</span><span class="s4"> </span><span class="s1">#calendar-modal-backdrop</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s5">opacity</span><span class="s1"> </span><span class="s10">0.4s</span><span class="s1"> </span><span class="s5">ease</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#event-modal</span><span class="s8">,</span><span class="s4"> </span><span class="s1">#calendar-modal</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s5">all</span><span class="s1"> </span><span class="s10">0.4s</span><span class="s1"> </span><span class="s5">cubic-bezier(</span><span class="s10">0.4</span><span class="s8">,</span><span class="s1"> </span><span class="s10">0</span><span class="s8">,</span><span class="s1"> </span><span class="s10">0.2</span><span class="s8">,</span><span class="s1"> </span><span class="s10">1</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s4"> </span><span class="s10">0.5rem</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s5">hidden</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">0</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">transform-origin:</span><span class="s4"> </span><span class="s5">center</span><span class="s4"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#event-modal.open</span><span class="s8">,</span><span class="s4"> </span><span class="s1">#calendar-modal.open</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">1</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;</span><span class="s6">body</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-gray-800"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto p-4 md:p-8 max-w-7xl"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">header</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center my-8 md:my-16 animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-4xl md:text-6xl font-black gradient-text"</span><span class="s3">&gt;</span><span class="s4">한국창의코딩대회 2025</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-4 text-lg md:text-xl"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #264653;"</span><span class="s3">&gt;</span><span class="s1">미래를 코딩하는 창의 인재들의 축제, 모든 것을 한눈에!</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">header</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">section</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center mb-12"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"date-card"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"animated-item bg-white p-6 rounded-xl shadow-lg border-b-4 cursor-pointer"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #2a9d8f;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-5xl mb-2"</span><span class="s3">&gt;</span><span class="s1">🗓️</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">2025년 8월 9일 ~ 10일</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-sm mt-1"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #2a9d8f;"</span><span class="s3">&gt;</span><span class="s1">🔍 (달력에서 확인하기)</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">a</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://map.kakao.com/link/search/알펜시아 컨벤션센터"</span><span class="s4"> </span><span class="s2">target</span><span class="s3">=</span><span class="s1">"_blank"</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"noopener noreferrer"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"animated-item block bg-white p-6 rounded-xl shadow-lg border-b-4"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #e76f51;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-5xl mb-2"</span><span class="s3">&gt;</span><span class="s1">📍</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">알펜시아 컨벤션센터</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-sm mt-1"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #e76f51;"</span><span class="s3">&gt;</span><span class="s1">🔍 (지도에서 위치 보기)</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">a</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"animated-item bg-white p-6 rounded-xl shadow-lg border-b-4"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #f4a261;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-5xl mb-2"</span><span class="s3">&gt;</span><span class="s1">👥</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">초·중·고 및 청소년</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"animated-item bg-white p-6 rounded-xl shadow-lg border-b-4"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #e9c46a;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-5xl mb-2"</span><span class="s3">&gt;</span><span class="s1">🏢</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">(사)한국로보컵협회</span><span class="s3">&lt;</span><span class="s6">br</span><span class="s3">&gt;</span><span class="s4">&amp; 로봇신문</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-sm mt-1"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #2a9d8f;"</span><span class="s3">&gt;</span><span class="s4">(주최)</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">section</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">section</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mb-10 animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl font-bold mb-2"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">대회 종목 둘러보기</span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"max-w-3xl mx-auto"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #264653;"</span><span class="s3">&gt;</span><span class="s1">아래 필터를 사용하여 관심있는 연령대의 종목만 모아볼 수 있습니다.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"max-w-3xl mx-auto font-bold"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #e76f51;"</span><span class="s3">&gt;</span><span class="s1">각 카드를 클릭하면 상세 내용을 확인할 수 있습니다.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"filter-buttons"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-wrap justify-center gap-2 mb-8 animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"filter-btn active py-2 px-4 bg-white rounded-full font-semibold shadow"</span><span class="s4"> </span><span class="s2">data-filter</span><span class="s3">=</span><span class="s1">"all"</span><span class="s3">&gt;</span><span class="s4">전체보기</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"filter-btn py-2 px-4 bg-white rounded-full font-semibold shadow"</span><span class="s4"> </span><span class="s2">data-filter</span><span class="s3">=</span><span class="s1">"rookie"</span><span class="s3">&gt;</span><span class="s4">초등 1-2학년</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"filter-btn py-2 px-4 bg-white rounded-full font-semibold shadow"</span><span class="s4"> </span><span class="s2">data-filter</span><span class="s3">=</span><span class="s1">"u12"</span><span class="s3">&gt;</span><span class="s4">초등 3-6학년</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"filter-btn py-2 px-4 bg-white rounded-full font-semibold shadow"</span><span class="s4"> </span><span class="s2">data-filter</span><span class="s3">=</span><span class="s1">"integrated"</span><span class="s3">&gt;</span><span class="s4">초등 3학년 이상</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"event-list"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">section</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">section</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">             </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-md p-8 animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl font-bold text-center mb-8"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">대회 일정</span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"relative pl-8 border-l-4"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #f4a261;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mb-12 animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-xl font-bold"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #2a9d8f;"</span><span class="s3">&gt;</span><span class="s1">경기 1일차 (토)</span><span class="s3">&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #264653;"</span><span class="s3">&gt;</span><span class="s1">레스큐 종목의 예선 라운드가 시작되어, 팀들은 다음 날의 최종 경기에 유리한 고지를 점하기 위해 최대한 많은 점수를 획득하고자 노력합니다.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2"</span><span class="s3">&gt;&lt;</span><span class="s6">b</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #e76f51;"</span><span class="s3">&gt;</span><span class="s1">루키 챌린지 종목은 토요일 하루 동안 모든 경기가 진행되어 최종 순위가 결정됩니다.</span><span class="s3">&lt;/</span><span class="s6">b</span><span class="s3">&gt;&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"animated-item"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-xl font-bold"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #2a9d8f;"</span><span class="s3">&gt;</span><span class="s1">경기 2일차 (일)</span><span class="s3">&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #264653;"</span><span class="s3">&gt;</span><span class="s1">전날의 점수와 합산될 레스큐 종목의 최종 라운드가 숨가쁘게 진행됩니다. 모든 경기가 종료된 후, 이틀간의 점수를 합산하여 최종 순위를 결정하고 영광의 수상자들을 위한 시상식이 열립니다.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"rounded-lg shadow-xl p-8 flex flex-col justify-center items-center text-center text-white animated-item"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"background-color: #2a9d8f;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-3xl font-black mb-4"</span><span class="s3">&gt;</span><span class="s1">🌍 세계로 가는 특별한 기회!</span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-lg max-w-md mx-auto"</span><span class="s3">&gt;</span><span class="s1">본 대회는 대한민국 대표 선발전을 겸합니다.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"my-4 p-3 rounded-lg w-full max-w-md"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"background-color: #fefae0e6;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-2xl font-black"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #e76f51;"</span><span class="s3">&gt;</span><span class="s1">RoboCup Asia-Pacific Abudhabi 2025</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-md font-bold mt-1"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #264653;"</span><span class="s3">&gt;</span><span class="s1">(10 - 15 November 2025)</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-lg max-w-md mx-auto"</span><span class="s3">&gt;</span><span class="s1">세계 무대에서 여러분의 꿈을 펼칠 수 있는 절호의 기회를 놓치지 마세요!</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">section</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">footer</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mt-12 py-8 border-t animated-item"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"border-color: #e9c46a;"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center justify-center gap-6"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">img</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://i.imgur.com/HnTF6jn.png"</span><span class="s4"> </span><span class="s2">alt</span><span class="s3">=</span><span class="s1">"도안러닝센터 로고"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"h-16"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"w-full"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-xl mb-2"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span><span class="s4">대회 참가 문의</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-2xl font-black"</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #e76f51;"</span><span class="s3">&gt;</span><span class="s1">박영란 부원장 010-9010-7853</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 text-base"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"font-semibold"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">도안러닝센터</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">042-825-8053</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"font-semibold"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">세종러닝센터</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">044-865-8054</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"font-semibold"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">대덕창의교습소</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">042-625-8980</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"font-semibold"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">논산러닝센터</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">041-734-7787</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">footer</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-backdrop"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed inset-0 bg-black bg-opacity-75 hidden z-40"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"event-modal"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed top-0 left-0 z-50 hidden"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-content"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-2xl"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"sticky top-0 bg-white p-4 sm:p-6 border-b border-gray-200 flex justify-between items-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-2xl font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-close-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-gray-500 hover:text-gray-800 text-3xl"</span><span class="s3">&gt;</span><span class="s4">&amp;times;</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-body"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-6 sm:p-8 overflow-y-auto"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"max-height: calc(85vh - 70px);"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"calendar-modal-backdrop"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed inset-0 bg-black bg-opacity-60 hidden z-40"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"calendar-modal"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed top-0 left-0 z-50 hidden"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-2xl"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-4 flex items-center justify-between border-b"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"calendar-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-lg font-bold"</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color: #264653;"</span><span class="s3">&gt;&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"calendar-close-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-gray-500 hover:text-gray-800 text-3xl"</span><span class="s3">&gt;</span><span class="s4">&amp;times;</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-7 text-center text-xs font-bold py-2 border-b"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-red-500"</span><span class="s3">&gt;</span><span class="s1">일</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span><span class="s1">월</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span><span class="s1">화</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span><span class="s1">수</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span><span class="s1">목</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span><span class="s1">금</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-blue-500"</span><span class="s3">&gt;</span><span class="s1">토</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"calendar-body"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-7 text-center p-2 gap-1"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>document</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'DOMContentLoaded'</span><span class="s8">,</span><span class="s1"> </span><span class="s8">()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> eventData </span><span class="s8">=</span><span class="s1"> </span><span class="s8">[</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'rookie-challenge'</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'루키챌린지'</span><span class="s8">,</span><span class="s4"> age</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'초등 1-2학년'</span><span class="s8">,</span><span class="s4"> category</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'창의 미션'</span><span class="s8">,</span><span class="s4"> note</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'토요일 하루 진행'</span><span class="s8">,</span><span class="s4"> desc</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'컬링과 비슷한 방식으로, 로봇을 이용해 퍽(공)을 과녁의 중심에 가깝게 보내는 경기입니다.'</span><span class="s8">,</span><span class="s4"> tags</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'rookie'</span><span class="s8">],</span><span class="s4"> details</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> mission</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'컬링처럼 로봇을 이용해 지정된 퍽(공)을 과녁 중앙에 가장 가깝게 보내는 경기입니다.'</span><span class="s8">,</span><span class="s4"> rules</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'로봇은 출발 후 완전히 자율적으로 움직여야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'대회 현장에서 로봇을 조립하고 프로그램을 작성해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'팀 당 6개의 퍽(공)이 주어지며, 모든 턴이 끝난 후 점수를 계산합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'과녁 중앙에 가까울수록 높은 점수를 획득합니다 (노랑 20점, 빨강 15점, 하양 10점, 파랑 5점).'</span><span class="s8">],</span><span class="s4"> field</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'약 750mm x 1600mm 크기의 흰색 경기장 위에 동심원 모양의 과녁이 그려져 있습니다.'</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'rescue-basic'</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'레스큐 베이직'</span><span class="s8">,</span><span class="s4"> age</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'초등 3-6학년'</span><span class="s8">,</span><span class="s4"> category</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'로봇 구조'</span><span class="s8">,</span><span class="s4"> desc</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'실제 로봇을 활용하여 주어진 구조 미션을 해결하는 종목입니다.'</span><span class="s8">,</span><span class="s4"> tags</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'u12'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'integrated'</span><span class="s8">],</span><span class="s4"> details</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> mission</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'라인을 따라 이동하며 장애물을 극복하고 조난자를 지정된 장소로 운반하는 미션입니다.'</span><span class="s8">,</span><span class="s4"> rules</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'로봇은 완전히 자율적으로 작동해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'검은색 라인을 따라 주행해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'장애물, 경사로 등 다양한 환경을 통과해야 합니다.'</span><span class="s4"> </span><span class="s8">,</span><span class="s4"> </span><span class="s1">'조난자를 안전하게 구조하여 대피 구역으로 옮겨야 합니다.'</span><span class="s8">],</span><span class="s4"> field</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'검은색 라인과 다양한 장애물(경사로, 험로 등)으로 구성된 경기장'</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'rescue-maze'</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'레스큐 메이즈 베이직'</span><span class="s8">,</span><span class="s4"> age</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'초등 3-6학년'</span><span class="s8">,</span><span class="s4"> category</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'로봇 구조'</span><span class="s8">,</span><span class="s4"> desc</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'복잡한 미로를 탐색하며 인명을 구조하는 임무에 도전합니다.'</span><span class="s8">,</span><span class="s4"> tags</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'u12'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'integrated'</span><span class="s8">],</span><span class="s4"> details</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> mission</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'미로를 자율적으로 탐색하여 조난자를 찾아내고, 출발 지점으로 귀환하는 미션입니다.'</span><span class="s8">,</span><span class="s4"> rules</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'로봇은 스스로 미로 지도를 작성하며 탐색해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'벽과의 충돌을 최소화해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'조난자(열 또는 색상 센서로 감지)를 발견하면 신호를 보내야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'탐색 완료 후 출발 지점으로 돌아와야 합니다.'</span><span class="s8">],</span><span class="s4"> field</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'벽으로 구성된 복잡한 미로 형태의 경기장'</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'rescue-line'</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'레스큐 라인'</span><span class="s8">,</span><span class="s4"> age</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'초등 3학년 이상'</span><span class="s8">,</span><span class="s4"> category</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'로봇 구조'</span><span class="s8">,</span><span class="s4"> desc</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'라인트레이싱 기술을 활용하여 신속하고 정확하게 구조 미션을 완료합니다.'</span><span class="s8">,</span><span class="s4"> tags</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'integrated'</span><span class="s8">],</span><span class="s4"> details</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> mission</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'검은색 선으로 이루어진 경로를 따라가며, 중간에 놓인 조난자(공)를 수거하여 지정된 구조 구역으로 옮기는 미션입니다.'</span><span class="s8">,</span><span class="s4"> rules</span><span class="s8">:</span><span class="s4"> </span><span class="s8">[</span><span class="s1">'로봇은 검은색 선을 벗어나지 않고 주행해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'경로 상의 교차로나 끊어진 길 등 다양한 상황을 판단하여 극복해야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'조난자를 안전하게 수집하고 지정된 위치에 정확히 놓아야 합니다.'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'가장 빠른 시간 안에 미션을 완료해야 합니다.'</span><span class="s8">],</span><span class="s4"> field</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'흰색 바닥에 검은색 선으로 그려진 트랙, 교차로 및 다양한 형태의 조난자 포함'</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">];</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> eventList </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'event-list'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> filterButtons </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'filter-buttons'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> eventModal </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'event-modal'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> modalBackdrop </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'modal-backdrop'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> modalCloseBtn </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'modal-close-btn'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> modalTitle </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'modal-title'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> modalBody </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'modal-body'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">let</span><span class="s1"> lastEventCardRect </span><span class="s8">=</span><span class="s1"> </span><span class="s11">null</span><span class="s8">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> dateCard </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'date-card'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> calendarModal </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'calendar-modal'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> calendarBackdrop </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'calendar-modal-backdrop'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> calendarCloseBtn </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'calendar-close-btn'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> calendarTitle </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'calendar-title'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> calendarBody </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'calendar-body'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">let</span><span class="s1"> lastDateCardRect </span><span class="s8">=</span><span class="s1"> </span><span class="s11">null</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> createFavicon</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> canvas </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">createElement</span><span class="s8">(</span><span class="s9">'canvas'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>canvas</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s12">32</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>canvas</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s12">32</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> ctx </span><span class="s8">=</span><span class="s1"> canvas</span><span class="s8">.</span><span class="s1">getContext</span><span class="s8">(</span><span class="s9">'2d'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">fillStyle </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'#2a9d8f'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">beginPath</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> teeth </span><span class="s8">=</span><span class="s1"> </span><span class="s12">8</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> radius </span><span class="s8">=</span><span class="s1"> </span><span class="s12">14</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> innerRadius </span><span class="s8">=</span><span class="s1"> </span><span class="s12">8</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">for</span><span class="s1"> </span><span class="s8">(</span><span class="s11">let</span><span class="s1"> i </span><span class="s8">=</span><span class="s1"> </span><span class="s12">0</span><span class="s8">;</span><span class="s1"> i </span><span class="s8">&lt;</span><span class="s1"> teeth</span><span class="s8">;</span><span class="s1"> i</span><span class="s8">++)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> angle </span><span class="s8">=</span><span class="s1"> </span><span class="s8">(</span><span class="s1">i </span><span class="s8">/</span><span class="s1"> teeth</span><span class="s8">)</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s12">2</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s13">Math</span><span class="s8">.</span><span class="s13">PI</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> nextAngle </span><span class="s8">=</span><span class="s1"> </span><span class="s8">((</span><span class="s1">i </span><span class="s8">+</span><span class="s1"> </span><span class="s12">0.5</span><span class="s8">)</span><span class="s1"> </span><span class="s8">/</span><span class="s1"> teeth</span><span class="s8">)</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s12">2</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s13">Math</span><span class="s8">.</span><span class="s13">PI</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>ctx</span><span class="s8">.</span><span class="s1">arc</span><span class="s8">(</span><span class="s12">16</span><span class="s8">,</span><span class="s1"> </span><span class="s12">16</span><span class="s8">,</span><span class="s1"> radius</span><span class="s8">,</span><span class="s1"> angle</span><span class="s8">,</span><span class="s1"> nextAngle</span><span class="s8">,</span><span class="s1"> </span><span class="s11">false</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>ctx</span><span class="s8">.</span><span class="s1">arc</span><span class="s8">(</span><span class="s12">16</span><span class="s8">,</span><span class="s1"> </span><span class="s12">16</span><span class="s8">,</span><span class="s1"> innerRadius</span><span class="s8">,</span><span class="s1"> nextAngle</span><span class="s8">,</span><span class="s1"> angle</span><span class="s8">,</span><span class="s1"> </span><span class="s11">true</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">fill</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">beginPath</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">fillStyle </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'#fefae0'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">arc</span><span class="s8">(</span><span class="s12">16</span><span class="s8">,</span><span class="s1"> </span><span class="s12">16</span><span class="s8">,</span><span class="s1"> </span><span class="s12">5</span><span class="s8">,</span><span class="s1"> </span><span class="s12">0</span><span class="s8">,</span><span class="s1"> </span><span class="s12">2</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s13">Math</span><span class="s8">.</span><span class="s13">PI</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>ctx</span><span class="s8">.</span><span class="s1">fill</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'favicon'</span><span class="s8">).</span><span class="s1">href </span><span class="s8">=</span><span class="s1"> canvas</span><span class="s8">.</span><span class="s1">toDataURL</span><span class="s8">(</span><span class="s9">'image/png'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> renderEvents</span><span class="s8">(</span><span class="s1">filter </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'all'</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventList</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">''</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> filteredEvents </span><span class="s8">=</span><span class="s1"> filter </span><span class="s8">===</span><span class="s1"> </span><span class="s9">'all'</span><span class="s1"> </span><span class="s8">?</span><span class="s1"> eventData </span><span class="s8">:</span><span class="s1"> eventData</span><span class="s8">.</span><span class="s1">filter</span><span class="s8">(</span><span class="s1">e </span><span class="s8">=&gt;</span><span class="s1"> e</span><span class="s8">.</span><span class="s1">tags</span><span class="s8">.</span><span class="s1">includes</span><span class="s8">(</span><span class="s1">filter</span><span class="s8">));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>filteredEvents</span><span class="s8">.</span><span class="s1">forEach</span><span class="s8">(</span><span class="s1">event </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> card </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">createElement</span><span class="s8">(</span><span class="s9">'div'</span><span class="s8">);</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>card</span><span class="s8">.</span><span class="s4">className </span><span class="s8">=</span><span class="s4"> </span><span class="s1">'event-card animated-item bg-white rounded-lg shadow-md p-6 border-l-4 flex flex-col'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>card</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">borderColor </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'#e76f51'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>card</span><span class="s8">.</span><span class="s1">dataset</span><span class="s8">.</span><span class="s1">id </span><span class="s8">=</span><span class="s1"> event</span><span class="s8">.</span><span class="s1">id</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>card</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-grow"&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm font-bold" style="color: #2a9d8f;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">category</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h4 class="text-xl font-bold mt-1" style="color: #264653;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">name</span><span class="s8">}</span><span class="s1">&lt;/h4&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm font-semibold my-2" style="color: #264653b3;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">age</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p class="text-base" style="color: #264653;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">desc</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">note </span><span class="s8">?</span><span class="s4"> </span><span class="s1">`&lt;div class="mt-4"&gt;&lt;span class="inline-block bg-[#e76f51] text-white text-xs font-bold px-3 py-1 rounded-full"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">note</span><span class="s8">}</span><span class="s1">&lt;/span&gt;&lt;/div&gt;`</span><span class="s4"> </span><span class="s8">:</span><span class="s4"> </span><span class="s1">''</span><span class="s8">}</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="text-right mt-4 font-bold" style="color: #f4a261;"&gt;자세히 보기 →&lt;/div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventList</span><span class="s8">.</span><span class="s1">appendChild</span><span class="s8">(</span><span class="s1">card</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>observeElements</span><span class="s8">();</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> openEventModal</span><span class="s8">(</span><span class="s1">eventId</span><span class="s8">,</span><span class="s1"> cardRect</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> event </span><span class="s8">=</span><span class="s1"> eventData</span><span class="s8">.</span><span class="s1">find</span><span class="s8">(</span><span class="s1">e </span><span class="s8">=&gt;</span><span class="s1"> e</span><span class="s8">.</span><span class="s1">id </span><span class="s8">===</span><span class="s1"> eventId</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">event</span><span class="s8">)</span><span class="s1"> </span><span class="s11">return</span><span class="s8">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>lastEventCardRect </span><span class="s8">=</span><span class="s1"> cardRect</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>modalTitle</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> event</span><span class="s8">.</span><span class="s1">name</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>modalBody</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="mb-6"&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-lg font-bold border-b-2 pb-2 mb-3" style="color: #2a9d8f; border-color: #f4a261;"&gt;🎯 미션 목표&lt;/h4&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p style="color: #264653;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">details</span><span class="s8">.</span><span class="s4">mission</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="mb-6"&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-lg font-bold border-b-2 pb-2 mb-3" style="color: #2a9d8f; border-color: #f4a261;"&gt;📜 주요 규정&lt;/h4&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;ul class="list-disc list-inside space-y-2" style="color: #264653;"&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">details</span><span class="s8">.</span><span class="s4">rules</span><span class="s8">.</span><span class="s4">map</span><span class="s8">(</span><span class="s4">rule </span><span class="s8">=&gt;</span><span class="s4"> </span><span class="s1">`&lt;li&gt;</span><span class="s8">${</span><span class="s4">rule</span><span class="s8">}</span><span class="s1">&lt;/li&gt;`</span><span class="s8">).</span><span class="s4">join</span><span class="s8">(</span><span class="s1">''</span><span class="s8">)}</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/ul&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-lg font-bold border-b-2 pb-2 mb-3" style="color: #2a9d8f; border-color: #f4a261;"&gt;🏞️ 경기 환경&lt;/h4&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p style="color: #264653;"&gt;</span><span class="s8">${</span><span class="s4">event</span><span class="s8">.</span><span class="s4">details</span><span class="s8">.</span><span class="s4">field</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p8"><span class="s1"><span class="Apple-converted-space">                </span>`</span><span class="s8">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>modalBackdrop</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">left</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">top</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">width</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">height</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>requestAnimationFrame</span><span class="s8">(()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>modalBackdrop</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">opacity </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'1'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'open'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> targetWidth </span><span class="s8">=</span><span class="s1"> </span><span class="s13">Math</span><span class="s8">.</span><span class="s1">min</span><span class="s8">(</span><span class="s12">800</span><span class="s8">,</span><span class="s1"> window</span><span class="s8">.</span><span class="s1">innerWidth </span><span class="s8">*</span><span class="s1"> </span><span class="s12">0.9</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${(</span><span class="s1">window</span><span class="s8">.</span><span class="s1">innerWidth </span><span class="s8">-</span><span class="s1"> targetWidth</span><span class="s8">)</span><span class="s1"> </span><span class="s8">/</span><span class="s1"> </span><span class="s12">2</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`5vh`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">targetWidth</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'auto'</span><span class="s8">;</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> closeEventModal</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">lastEventCardRect</span><span class="s8">)</span><span class="s1"> </span><span class="s11">return</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>modalBackdrop</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">opacity </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'0'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'open'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastEventCardRect</span><span class="s8">.</span><span class="s1">left</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastEventCardRect</span><span class="s8">.</span><span class="s1">top</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastEventCardRect</span><span class="s8">.</span><span class="s1">width</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastEventCardRect</span><span class="s8">.</span><span class="s1">height</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>eventModal</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'transitionend'</span><span class="s8">,</span><span class="s1"> </span><span class="s11">function</span><span class="s1"> handler</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>modalBackdrop</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>lastEventCardRect </span><span class="s8">=</span><span class="s1"> </span><span class="s11">null</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>eventModal</span><span class="s8">.</span><span class="s1">removeEventListener</span><span class="s8">(</span><span class="s9">'transitionend'</span><span class="s8">,</span><span class="s1"> handler</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">},</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> once</span><span class="s8">:</span><span class="s1"> </span><span class="s11">true</span><span class="s1"> </span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> generateCalendar</span><span class="s8">(</span><span class="s1">year</span><span class="s8">,</span><span class="s1"> month</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarBody</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">''</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarTitle</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">year</span><span class="s8">}</span><span class="s9">년 </span><span class="s8">${</span><span class="s1">month </span><span class="s8">+</span><span class="s1"> </span><span class="s12">1</span><span class="s8">}</span><span class="s9">월`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> firstDay </span><span class="s8">=</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s8">(</span><span class="s1">year</span><span class="s8">,</span><span class="s1"> month</span><span class="s8">,</span><span class="s1"> </span><span class="s12">1</span><span class="s8">).</span><span class="s1">getDay</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> daysInMonth </span><span class="s8">=</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s8">(</span><span class="s1">year</span><span class="s8">,</span><span class="s1"> month </span><span class="s8">+</span><span class="s1"> </span><span class="s12">1</span><span class="s8">,</span><span class="s1"> </span><span class="s12">0</span><span class="s8">).</span><span class="s1">getDate</span><span class="s8">();</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">for</span><span class="s1"> </span><span class="s8">(</span><span class="s11">let</span><span class="s1"> i </span><span class="s8">=</span><span class="s1"> </span><span class="s12">0</span><span class="s8">;</span><span class="s1"> i </span><span class="s8">&lt;</span><span class="s1"> firstDay</span><span class="s8">;</span><span class="s1"> i</span><span class="s8">++)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarBody</span><span class="s8">.</span><span class="s1">appendChild</span><span class="s8">(</span><span class="s1">document</span><span class="s8">.</span><span class="s1">createElement</span><span class="s8">(</span><span class="s9">'div'</span><span class="s8">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">for</span><span class="s1"> </span><span class="s8">(</span><span class="s11">let</span><span class="s1"> day </span><span class="s8">=</span><span class="s1"> </span><span class="s12">1</span><span class="s8">;</span><span class="s1"> day </span><span class="s8">&lt;=</span><span class="s1"> daysInMonth</span><span class="s8">;</span><span class="s1"> day</span><span class="s8">++)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> dayCell </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">createElement</span><span class="s8">(</span><span class="s9">'div'</span><span class="s8">);</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>dayCell</span><span class="s8">.</span><span class="s4">className </span><span class="s8">=</span><span class="s4"> </span><span class="s1">'py-2 w-10 h-10 flex items-center justify-center'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>dayCell</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> day</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">year </span><span class="s8">===</span><span class="s1"> </span><span class="s12">2025</span><span class="s1"> </span><span class="s8">&amp;&amp;</span><span class="s1"> month </span><span class="s8">===</span><span class="s1"> </span><span class="s12">7</span><span class="s1"> </span><span class="s8">&amp;&amp;</span><span class="s1"> </span><span class="s8">(</span><span class="s1">day </span><span class="s8">===</span><span class="s1"> </span><span class="s12">9</span><span class="s1"> </span><span class="s8">||</span><span class="s1"> day </span><span class="s8">===</span><span class="s1"> </span><span class="s12">10</span><span class="s8">))</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>dayCell</span><span class="s8">.</span><span class="s4">classList</span><span class="s8">.</span><span class="s4">add</span><span class="s8">(</span><span class="s1">'bg-[#e76f51]'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'text-white'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'font-bold'</span><span class="s8">,</span><span class="s4"> </span><span class="s1">'rounded-full'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarBody</span><span class="s8">.</span><span class="s1">appendChild</span><span class="s8">(</span><span class="s1">dayCell</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> openCalendar</span><span class="s8">(</span><span class="s1">cardRect</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>lastDateCardRect </span><span class="s8">=</span><span class="s1"> cardRect</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>generateCalendar</span><span class="s8">(</span><span class="s12">2025</span><span class="s8">,</span><span class="s1"> </span><span class="s12">7</span><span class="s8">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarBackdrop</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">left</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">top</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">width</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">cardRect</span><span class="s8">.</span><span class="s1">height</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>requestAnimationFrame</span><span class="s8">(()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarBackdrop</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">opacity </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'1'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'open'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> targetWidth </span><span class="s8">=</span><span class="s1"> </span><span class="s13">Math</span><span class="s8">.</span><span class="s1">min</span><span class="s8">(</span><span class="s12">384</span><span class="s8">,</span><span class="s1"> window</span><span class="s8">.</span><span class="s1">innerWidth </span><span class="s8">*</span><span class="s1"> </span><span class="s12">0.9</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> targetHeight </span><span class="s8">=</span><span class="s1"> calendarModal</span><span class="s8">.</span><span class="s1">querySelector</span><span class="s8">(</span><span class="s9">'div'</span><span class="s8">).</span><span class="s1">offsetHeight</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${(</span><span class="s1">window</span><span class="s8">.</span><span class="s1">innerWidth </span><span class="s8">-</span><span class="s1"> targetWidth</span><span class="s8">)</span><span class="s1"> </span><span class="s8">/</span><span class="s1"> </span><span class="s12">2</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${(</span><span class="s1">window</span><span class="s8">.</span><span class="s1">innerHeight </span><span class="s8">-</span><span class="s1"> targetHeight</span><span class="s8">)</span><span class="s1"> </span><span class="s8">/</span><span class="s1"> </span><span class="s12">2</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">targetWidth</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">targetHeight</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> closeCalendar</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">lastDateCardRect</span><span class="s8">)</span><span class="s1"> </span><span class="s11">return</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarBackdrop</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">opacity </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'0'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'open'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">left </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastDateCardRect</span><span class="s8">.</span><span class="s1">left</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">top </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastDateCardRect</span><span class="s8">.</span><span class="s1">top</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastDateCardRect</span><span class="s8">.</span><span class="s1">width</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">height </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">lastDateCardRect</span><span class="s8">.</span><span class="s1">height</span><span class="s8">}</span><span class="s9">px`</span><span class="s8">;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>calendarModal</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'transitionend'</span><span class="s8">,</span><span class="s1"> </span><span class="s11">function</span><span class="s1"> handler</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarBackdrop</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>lastDateCardRect </span><span class="s8">=</span><span class="s1"> </span><span class="s11">null</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>calendarModal</span><span class="s8">.</span><span class="s1">removeEventListener</span><span class="s8">(</span><span class="s9">'transitionend'</span><span class="s8">,</span><span class="s1"> handler</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">},</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> once</span><span class="s8">:</span><span class="s1"> </span><span class="s11">true</span><span class="s1"> </span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>filterButtons</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> </span><span class="s8">(</span><span class="s1">e</span><span class="s8">)</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> button </span><span class="s8">=</span><span class="s1"> e</span><span class="s8">.</span><span class="s1">target</span><span class="s8">.</span><span class="s1">closest</span><span class="s8">(</span><span class="s9">'button'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">button</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>document</span><span class="s8">.</span><span class="s1">querySelector</span><span class="s8">(</span><span class="s9">'.filter-btn.active'</span><span class="s8">).</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'active'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>button</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'active'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>renderEvents</span><span class="s8">(</span><span class="s1">button</span><span class="s8">.</span><span class="s1">dataset</span><span class="s8">.</span><span class="s1">filter</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">});</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>eventList</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> </span><span class="s8">(</span><span class="s1">e</span><span class="s8">)</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> card </span><span class="s8">=</span><span class="s1"> e</span><span class="s8">.</span><span class="s1">target</span><span class="s8">.</span><span class="s1">closest</span><span class="s8">(</span><span class="s9">'.event-card'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">card</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> cardRect </span><span class="s8">=</span><span class="s1"> card</span><span class="s8">.</span><span class="s1">getBoundingClientRect</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>openEventModal</span><span class="s8">(</span><span class="s1">card</span><span class="s8">.</span><span class="s1">dataset</span><span class="s8">.</span><span class="s1">id</span><span class="s8">,</span><span class="s1"> cardRect</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>dateCard</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> </span><span class="s8">(</span><span class="s1">e</span><span class="s8">)</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                 </span></span><span class="s11">const</span><span class="s1"> cardRect </span><span class="s8">=</span><span class="s1"> e</span><span class="s8">.</span><span class="s1">currentTarget</span><span class="s8">.</span><span class="s1">getBoundingClientRect</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                 </span>openCalendar</span><span class="s8">(</span><span class="s1">cardRect</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">});</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>modalCloseBtn</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> closeEventModal</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>modalBackdrop</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> closeEventModal</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>calendarCloseBtn</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> closeCalendar</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>calendarBackdrop</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> closeCalendar</span><span class="s8">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> observer </span><span class="s8">=</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s13">IntersectionObserver</span><span class="s8">((</span><span class="s1">entries</span><span class="s8">)</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>entries</span><span class="s8">.</span><span class="s1">forEach</span><span class="s8">(</span><span class="s1">entry </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">entry</span><span class="s8">.</span><span class="s1">isIntersecting</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>entry</span><span class="s8">.</span><span class="s1">target</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'is-visible'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">},</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> threshold</span><span class="s8">:</span><span class="s1"> </span><span class="s12">0.1</span><span class="s1"> </span><span class="s8">});</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">function</span><span class="s1"> observeElements</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>document</span><span class="s8">.</span><span class="s1">querySelectorAll</span><span class="s8">(</span><span class="s9">'.animated-item'</span><span class="s8">).</span><span class="s1">forEach</span><span class="s8">(</span><span class="s1">el </span><span class="s8">=&gt;</span><span class="s1"> observer</span><span class="s8">.</span><span class="s1">observe</span><span class="s8">(</span><span class="s1">el</span><span class="s8">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s7"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>createFavicon</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>renderEvents</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>observeElements</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">});</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s7"></span><br></p>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center py-12">
+            <img src="https://i.imgur.com/FtLGl54.png" onerror="this.onerror=null;this.src='https://placehold.co/200x64/f8fafc/6b7280?text=두잉굿+로고';" alt="두잉굿 로고" class="h-16 mx-auto mb-4">
+            <h1 class="text-4xl md:text-6xl font-black mb-4">
+                <span class="gradient-text">두잉굿 러닝센터</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-bold text-gray-700">좋은 일을 하면 좋은 인재가 자랍니다</p>
+            <p class="mt-2 text-lg text-gray-500">25년 교육 전문가 주혜란 원장과 함께 우리 아이의 가능성을 열어주세요.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="why-us">
+                <h2 class="text-3xl font-extrabold text-center mb-12">왜 두잉굿일까요?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="card p-8 text-center flex flex-col items-center">
+                        <div class="icon-bg mb-4">💡</div>
+                        <h3 class="text-2xl font-bold mb-2">독자적인 교육 시스템</h3>
+                        <p class="text-gray-600">세계적인 교육 철학을 바탕으로, '브릭스토리텔러' 등 자체 융합 프로그램을 더해 끊임없이 발전합니다.</p>
+                    </div>
+                    <div class="card p-8 text-center flex flex-col items-center">
+                        <div class="icon-bg mb-4">👩‍🏫</div>
+                        <h3 class="text-2xl font-bold mb-2">검증된 리더십</h3>
+                        <p class="text-gray-600">25년+ 교육 전문가 주혜란 원장이 직접 이끕니다. KCIA 1위, 교육부 인증으로 증명합니다.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="roadmap">
+                <h2 class="text-3xl font-extrabold text-center mb-16">우리 아이의 체계적인 성장 로드맵</h2>
+                <div class="relative timeline mb-12">
+                    <div class="timeline-item mb-16 flex justify-between items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-item-content">
+                             <div class="card p-6">
+                                <p class="text-sm font-bold" style="color: var(--color-primary);">🌱 새싹 단계</p>
+                                <h3 class="text-xl font-bold mb-2">프리스쿨 (Preschool)</h3>
+                                <p class="text-gray-600">놀이를 통해 기초기계 원리를 배우고 창의적 조립으로 소근육을 발달시킵니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-16 flex justify-between items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-item-content">
+                             <div class="card p-6">
+                                <p class="text-sm font-bold" style="color: var(--color-accent1);">⚙️ 성장 단계</p>
+                                <h3 class="text-xl font-bold mb-2">스쿨 (School)</h3>
+                                <p class="text-gray-600">지레, 바퀴, 기어 등 과학 원리를 심화하고 문제 해결 능력을 향상시킵니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item flex justify-between items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-item-content">
+                            <div class="card p-6">
+                                <p class="text-sm font-bold" style="color: var(--color-accent2);">🤖 심화 단계</p>
+                                <h3 class="text-xl font-bold mb-2">로보틱스 (Robotics)</h3>
+                                <p class="text-gray-600">블록 코딩, 로봇 설계 및 프로그래밍을 마스터하고 국내외 대회에 도전합니다.</p>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative flex justify-center items-center my-8">
+                    <span class="text-4xl font-bold text-gray-400">+</span>
+                </div>
+
+                <div class="card p-8 md:p-12 text-center max-w-3xl mx-auto border-2" style="border-color: var(--color-accent1); background-color: #FEF6FB;">
+                    <h3 class="text-2xl font-extrabold mb-4"><span style="color: var(--color-accent1);">⭐</span> 모든 성장의 기반, <span class="gradient-text">핵심 융합 프로그램</span></h3>
+                    <p class="text-xl font-bold mb-2">브릭스토리텔러</p>
+                    <p class="text-gray-600">
+                        '브릭스토리텔러'는 특정 학년에 국한되지 않고, 모든 학습 단계에 걸쳐 아이들의 문해력, 표현력, 공감 능력을 키우는 두잉굿의 핵심 융합 과정입니다. 기술 학습과 인문학적 소양을 함께 길러 통합적 인재로 성장시킵니다.
+                    </p>
+                </div>
+            </section>
+
+            <section id="extra-programs">
+                <h2 class="text-3xl font-extrabold text-center mb-12">다채로운 융합 프로그램: 브릭을 넘어 더 넓은 세상으로</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="card p-8 text-center flex flex-col items-center">
+                        <div class="icon-bg mb-4">🎲</div>
+                        <h3 class="text-2xl font-bold mb-2">전략적 사고를 키우는 보드게임</h3>
+                        <p class="text-gray-600">세계 여러 나라의 보드게임을 통해 즐겁게 협동심과 전략적 사고력, 문제 해결 능력을 기릅니다.</p>
+                    </div>
+                    <div class="card p-8 text-center flex flex-col items-center">
+                        <div class="icon-bg mb-4">🔬</div>
+                        <h3 class="text-2xl font-bold mb-2">호기심을 만족시키는 실험과학</h3>
+                        <p class="text-gray-600">직접 만지고 관찰하는 생생한 과학 실험을 통해 탐구 능력을 키우고 과학 원리를 재미있게 체득합니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="signature-program" class="card p-8 md:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl font-extrabold mb-4">시그니처 프로그램: <span class="gradient-text">브릭스토리텔러</span></h2>
+                        <p class="text-lg font-bold mb-4 text-gray-700">"책을 싫어하는 아이를 위한 특별한 처방전!"</p>
+                        <p class="text-gray-600 mb-6">디지털 시대, 우리 아이에게 가장 필요한 문해력(Literacy)! 책 읽기에 흥미를 잃은 아이들이 자신만의 이야기를 브릭으로 표현하며 독서와 친해지고 표현력을 키우는 독창적인 융합 교육입니다.</p>
+                        <ul class="space-y-3 text-left">
+                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>독서 흥미와 자신감</strong> 동시 향상</li>
+                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>표현력 및 공감 능력</strong> 강화</li>
+                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>'지도사 과정' 운영</strong>으로 전문성 입증</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="chart-container h-64 md:h-80">
+                            <canvas id="literacyChart"></canvas>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-2">브릭스토리텔러 프로그램의 핵심 목표</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-program" class="card p-8 md:p-12 text-center" style="background-color: #F0F9FF; border-color: #D6EEFF;">
+                 <h2 class="text-3xl font-extrabold mb-4">AI와 만난 브릭: <span class="gradient-text">미래형 창의 융합 교육</span></h2>
+                 <p class="text-gray-600 max-w-3xl mx-auto mb-8">
+                    최신 AI 기술로 상상 속의 이야기를 만들고, 브릭으로 구현하며 코딩으로 생명을 불어넣습니다. 단순한 기술 습득을 넘어, 아이들은 자신만의 스토리를 창조하는 미래의 크리에이터가 됩니다.
+                 </p>
+                 <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-2 max-w-5xl mx-auto">
+                    <!-- Step 1 -->
+                    <div class="flex-1 flex flex-col items-center text-center p-2">
+                        <div class="icon-bg mb-2">🧠</div>
+                        <h3 class="text-xl font-bold">1. AI 스토리 생성</h3>
+                        <p class="text-sm text-gray-600 mt-1">AI와 대화하며 세상에 없던 이야기를 만들어요.</p>
+                    </div>
+                    <!-- Separator -->
+                    <div class="hidden md:block text-4xl font-light mx-2" style="color: var(--color-primary);">›</div>
+                    <!-- Step 2 -->
+                    <div class="flex-1 flex flex-col items-center text-center p-2">
+                        <div class="icon-bg mb-2">🧱</div>
+                        <h3 class="text-xl font-bold">2. 브릭 모델링</h3>
+                        <p class="text-sm text-gray-600 mt-1">이야기 속 주인공과 배경을 직접 조립해요.</p>
+                    </div>
+                     <!-- Separator -->
+                    <div class="hidden md:block text-4xl font-light mx-2" style="color: var(--color-primary);">›</div>
+                     <!-- Step 3 -->
+                     <div class="flex-1 flex flex-col items-center text-center p-2">
+                        <div class="icon-bg mb-2">⚙️</div>
+                        <h3 class="text-xl font-bold">3. 코딩으로 구현</h3>
+                        <p class="text-sm text-gray-600 mt-1">코딩으로 모델을 움직여 스토리를 완성해요.</p>
+                    </div>
+                 </div>
+                 <p class="mt-8 font-semibold" style="color: var(--color-primary);">창의력, 문제 해결 능력, 그리고 미래 기술 리터러시를 한번에!</p>
+            </section>
+
+            <section id="results">
+                <h2 class="text-3xl font-extrabold text-center mb-12">결과로 증명하는 성공의 역사</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-4 text-center">🏆 세계가 인정한 실력, 빛나는 수상 실적</h3>
+                        <p class="text-center text-gray-600 mb-6">2008년부터 16년 이상, 국내를 넘어 세계 무대에서 꾸준히 성과를 거두며 교육 경쟁력을 증명하고 있습니다. <span class="font-bold accent-text">특히 2024년에는 RoboCup 아시아-태평양 대회 1, 2위를 석권</span>하며 다시 한번 세계적인 수준을 입증했습니다.</p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 text-center mb-6">
+                             <div class="bg-gray-100 p-4 rounded-lg">
+                                <p class="text-3xl font-black accent-text">1위</p>
+                                <p class="text-sm font-bold text-gray-600">2024 RoboCup 아-태</p>
+                            </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <p class="text-3xl font-black gradient-text">1위</p>
+                                <p class="text-sm font-bold text-gray-600">2019 RoboCup 세계</p>
+                            </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <p class="text-3xl font-black gradient-text">수상</p>
+                                <p class="text-sm font-bold text-gray-600">2016 FLL Nature's Fury</p>
+                            </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <p class="text-3xl font-black gradient-text">4위</p>
+                                <p class="text-sm font-bold text-gray-600">2013 WRO 세계</p>
+                            </div>
+                        </div>
+
+                        <div class="chart-container h-48 md:h-56 w-full max-w-full">
+                            <canvas id="awardsTrendChart"></canvas>
+                        </div>
+                         <p class="text-center text-xs text-gray-500 mt-1">연도별 주요 대회 수상 실적 추이</p>
+
+                    </div>
+                    <div class="card p-8 flex flex-col justify-center items-center text-center">
+                         <h3 class="text-2xl font-bold mb-4">🎓 브릭에서 공학자의 꿈으로</h3>
+                         <p class="text-gray-600 mb-6">유치원 시절부터 함께한 서O원 학생, <br class="hidden sm:block"/><strong>서강대학교 기계공학과</strong>에 당당히 입학했습니다!</p>
+                        <div class="w-full max-w-sm">
+                            <div class="relative pt-[100%]">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center" style="background-color: #FFF9C4;">
+                                         <span class="text-4xl md:text-5xl">🧒</span>
+                                    </div>
+                                    <div class="text-5xl font-thin mx-4" style="color: var(--color-accent2);">→</div>
+                                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center" style="background-color: #E0F7FA;">
+                                         <span class="text-4xl md:text-5xl">🧑‍🔧</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <p class="mt-6 font-semibold text-gray-700">놀이가 어떻게 꿈이 되고, 미래를 위한 투자가 되는지<br>그 성장 스토리가 증명합니다.</p>
+                         <a href="https://youtu.be/vZqx-VJ2Di4" target="_blank" class="mt-4 inline-block text-teal-800 font-bold py-2 px-5 rounded-full text-sm shadow-md transition-all" style="background-color: #CFFAFE; hover:background-color: #A5F3FC;">
+                            ▶︎ 성공 스토리 영상 보기
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact" class="text-center py-12">
+                <h2 class="text-3xl font-extrabold mb-4">지금 바로, 우리 아이의 미래를 만나보세요!</h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">부담 없이 두잉굿의 특별한 교육을 경험해보세요. <br class="hidden sm:block"/>가까운 센터로 문의하시면 전문가의 상담이 언제나 열려 있습니다.</p>
+                 <div class="text-center mb-10">
+                    <a href="https://blog.naver.com/doing_good_" target="_blank" class="inline-block font-bold py-3 px-6 rounded-full text-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300" style="color:white; background-color: var(--color-primary);">
+                        "두잉굿 공식 블로그에서 더 많은 소식을 만나보세요!"
+                    </a>
+                 </div>
+                
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-center mb-6">전국 두잉굿 네트워크</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-gray-700 px-4">
+                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
+                            <div>
+                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">대전 도안러닝센터</p>
+                                <p class="mt-2 text-sm leading-relaxed">대전 서구 동서대로 696,<br>FM프라임 2차 503호</p>
+                                <p class="mt-4 font-mono text-lg">📞 042-825-8053</p>
+                            </div>
+                            <a href="https://blog.naver.com/leo8053" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
+                        </div>
+                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
+                            <div>
+                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">대전 대덕창의교습소</p>
+                                <p class="mt-2 text-sm leading-relaxed">대전 서구 관저남로 20,<br>102호</p>
+                                <p class="mt-4 font-mono text-lg">📞 042-625-8980</p>
+                            </div>
+                            <a href="https://blog.naver.com/ranchoran75" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
+                        </div>
+                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
+                            <div>
+                               <p class="font-extrabold text-lg" style="color: var(--color-primary);">세종 러닝센터</p>
+                               <p class="mt-2 text-sm leading-relaxed">세종 남세종로 466,<br>아평빌딩 7층 703호</p>
+                               <p class="mt-4 font-mono text-lg">📞 044-865-8054</p>
+                            </div>
+                            <a href="https://blog.naver.com/leoleo8054" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
+                        </div>
+                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
+                            <div>
+                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">논산 러닝센터</p>
+                                <p class="mt-2 text-sm leading-relaxed">충남 논산시 시민로 181,<br>2층 201호</p>
+                                <p class="mt-4 font-mono text-lg">📞 041-734-7787</p>
+                            </div>
+                            <a href="#" class="mt-4 text-sm font-bold text-gray-400 cursor-not-allowed">블로그 준비중</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSf0AnABH21Rhmm3KPuwZ28QPtHp1YVqHub77iD6l5dODpVW_A/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-gray-900 font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" style="background-color: var(--color-accent2);">
+                        🎁 대전지역 체험수업 신청
+                    </a>
+                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSc818L0XSL-qTmiAlbBnhQvIYhtmS5kl8sKGpeE8y44xFziwg/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" style="background-color: var(--color-accent1);">
+                        🎁 세종지역 체험수업 신청
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const THEME_COLORS = {
+            primary: 'rgba(0, 169, 183, 1)',
+            accent1: 'rgba(217, 0, 126, 1)',
+            accent2: 'rgba(255, 199, 0, 1)',
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const sharedChartOptions = {
+             maintainAspectRatio: false,
+             responsive: true,
+             plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: "'Noto Sans KR', sans-serif",
+                            size: 12,
+                        }
+                    }
+                },
+                tooltip: {
+                    titleFont: { family: "'Noto Sans KR', sans-serif" },
+                    bodyFont: { family: "'Noto Sans KR', sans-serif" },
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const ctxLiteracy = document.getElementById('literacyChart').getContext('2d');
+        new Chart(ctxLiteracy, {
+            type: 'doughnut',
+            data: {
+                labels: ['문해력', '표현력', '공감능력', '창의력', '독서흥미'],
+                datasets: [{
+                    label: '핵심 목표',
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        THEME_COLORS.primary,
+                        THEME_COLORS.accent1,
+                        THEME_COLORS.accent2,
+                        '#4ade80', // green-400
+                        '#f97316'  // orange-500
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...sharedChartOptions,
+                cutout: '60%',
+            }
+        });
+
+        const ctxAwardsTrend = document.getElementById('awardsTrendChart').getContext('2d');
+        const gradient = ctxAwardsTrend.createLinearGradient(0, 0, 0, 150);
+        gradient.addColorStop(0, 'rgba(0, 169, 183, 0.5)');
+        gradient.addColorStop(1, 'rgba(0, 169, 183, 0)');
+
+        new Chart(ctxAwardsTrend, {
+            type: 'line',
+            data: {
+                labels: ['2013', '2015', '2016', '2017', '2019', '2020', '2022', '2023', '2024'],
+                datasets: [{
+                    label: '주요 수상',
+                    data: [3, 2, 3, 4, 3, 2, 3, 2, 3], // Approximate count of major awards
+                    backgroundColor: gradient,
+                    borderColor: THEME_COLORS.primary,
+                    pointBackgroundColor: THEME_COLORS.primary,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: THEME_COLORS.primary,
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                         ticks: {
+                            stepSize: 1
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                return tooltipItems[0].label + '년 주요 대회';
+                            },
+                            label: function(context) {
+                                return '수상 ' + context.parsed.y + '건 이상';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
