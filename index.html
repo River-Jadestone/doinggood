@@ -1,519 +1,313 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>두잉굿 | 우리 아이의 가능성이 현실이 되는 곳</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --color-primary: #00A9B7; /* Teal from logo */
             --color-accent1: #D9007E; /* Magenta from logo */
             --color-accent2: #FFC700; /* Yellow from logo */
         }
+        html {
+            scroll-padding-top: 5rem; /* Fixed header height */
+        }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8fafc;
+            color: #1a202c;
         }
-        .gradient-text {
-            color: var(--color-primary);
-        }
-        .accent-text {
-            color: var(--color-accent1);
-        }
-        .card {
-            background-color: white;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border: 1px solid #e5e7eb;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .icon-bg {
-            background-color: #E0F7FA; /* Light Teal */
-            color: var(--color-primary);
-            border-radius: 50%;
-            width: 4rem;
-            height: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
+        .text-primary { color: var(--color-primary); }
+        .text-accent-1 { color: var(--color-accent1); }
+        .text-accent-2 { color: var(--color-accent2); }
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-accent-1 { background-color: var(--color-accent1); }
+        .bg-accent-2 { background-color: var(--color-accent2); }
+        .border-primary { border-color: var(--color-primary); }
+        
+        .section-title {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
             font-weight: 900;
+            text-align: center;
         }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 100%;
-            width: 4px;
-            background-color: #e5e7eb;
-            z-index: 0;
-        }
-        .timeline-item {
-            position: relative;
-            width: 100%;
-            padding-left: 3rem;
-            padding-right: 3rem;
-            z-index: 1;
-        }
-         .timeline-item-content {
-            position: relative;
-            width: calc(50% - 2.5rem);
-        }
-        .timeline-item:nth-child(odd) .timeline-item-content {
-            left: 0;
-            padding-right: 1.5rem;
-            text-align: right;
-        }
-        .timeline-item:nth-child(even) .timeline-item-content {
-            left: calc(50% + 2.5rem);
-            padding-left: 1.5rem;
-            text-align: left;
-        }
-         .timeline-dot {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 50%;
-            background-color: white;
-            border: 4px solid var(--color-primary);
-            z-index: 2;
-        }
-        .timeline-item:hover .timeline-dot {
-             background-color: var(--color-accent2);
-        }
-        @media (max-width: 767px) {
-            .timeline::before {
-                left: 1.5rem;
+        @media (min-width: 1024px) {
+            .section-title {
+                font-size: 3rem;
+                line-height: 1;
             }
-            .timeline-item {
-                padding-left: 4rem;
-                 padding-right: 0;
-            }
-            .timeline-item-content {
-                 width: 100%;
-                 text-align: left !important;
-                 left: 0 !important;
-                 padding-left: 0 !important;
-                 padding-right: 0 !important;
-            }
-             .timeline-dot {
-                left: 1.5rem;
-            }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50">
 
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+    <!-- Header -->
+    <header id="header" class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-sm transition-shadow duration-300 shadow-sm">
+        <div class="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-5 lg:h-20 lg:px-10">
+            <a href="#" class="flex items-center gap-2">
+                <img src="https://i.imgur.com/FtLGl54.png" onerror="this.onerror=null;this.src='https://placehold.co/147x32/ffffff/1a202c?text=두잉굿';" alt="두잉굿 로고" class="h-8">
+            </a>
+            <nav class="hidden items-center gap-8 lg:flex">
+                <a href="#why-us" class="font-bold text-gray-600 hover:text-primary">왜 두잉굿인가?</a>
+                <a href="#programs" class="font-bold text-gray-600 hover:text-primary">교육 프로그램</a>
+                <a href="#results" class="font-bold text-gray-600 hover:text-primary">성공사례</a>
+                <a href="#contact" class="font-bold text-gray-600 hover:text-primary">센터안내</a>
+            </nav>
+            <a href="#contact" class="hidden lg:inline-block rounded-full bg-primary px-5 py-2.5 font-bold text-white transition hover:bg-opacity-90">무료체험 신청</a>
+            <button id="mobile-menu-button" class="lg:hidden">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-200">
+            <a href="#why-us" class="block px-5 py-3 text-base font-bold text-gray-700 hover:bg-gray-50">왜 두잉굿인가?</a>
+            <a href="#programs" class="block px-5 py-3 text-base font-bold text-gray-700 hover:bg-gray-50">교육 프로그램</a>
+            <a href="#results" class="block px-5 py-3 text-base font-bold text-gray-700 hover:bg-gray-50">성공사례</a>
+            <a href="#contact" class="block px-5 py-3 text-base font-bold text-gray-700 hover:bg-gray-50">센터안내</a>
+            <div class="p-5"><a href="#contact" class="block w-full rounded-full bg-primary px-5 py-3 text-center font-bold text-white transition hover:bg-opacity-90">무료체험 신청</a></div>
+        </div>
+    </header>
 
-        <header class="text-center py-12">
-            <img src="https://i.imgur.com/FtLGl54.png" onerror="this.onerror=null;this.src='https://placehold.co/200x64/f8fafc/6b7280?text=두잉굿+로고';" alt="두잉굿 로고" class="h-16 mx-auto mb-4">
-            <h1 class="text-4xl md:text-6xl font-black mb-4">
-                <span class="gradient-text">두잉굿 러닝센터</span>
-            </h1>
-            <p class="text-xl md:text-2xl font-bold text-gray-700">좋은 일을 하면 좋은 인재가 자랍니다</p>
-            <p class="mt-2 text-lg text-gray-500">25년 교육 전문가 주혜란 원장과 함께 우리 아이의 가능성을 열어주세요.</p>
-        </header>
-
-        <main class="space-y-16">
-
-            <section id="why-us">
-                <h2 class="text-3xl font-extrabold text-center mb-12">왜 두잉굿일까요?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    <main class="pt-16 lg:pt-20">
+        <!-- Hero Section -->
+        <section class="relative bg-gray-100 py-20 lg:py-32 text-center overflow-hidden">
+            <div class="absolute inset-0 bg-primary opacity-10"></div>
+            <div class="relative z-10 mx-auto max-w-4xl px-5">
+                <h1 class="font-brand text-4xl font-black lg:text-6xl text-primary">우리 아이의 가능성이<br>현실이 되는 곳, <span class="accent-text">두잉굿</span></h1>
+                <p class="mt-6 text-lg text-gray-700 lg:text-xl">25년 교육 전문가 주혜란 원장의 교육 철학과 독자적인 브릭 융합 프로그램을 만나보세요.</p>
+                <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <a href="#contact" class="w-full sm:w-auto rounded-full bg-accent-1 px-8 py-4 font-bold text-white shadow-lg transition hover:bg-opacity-90 transform hover:scale-105">무료체험 신청하기</a>
+                    <a href="#programs" class="w-full sm:w-auto rounded-full bg-white px-8 py-4 font-bold text-gray-800 shadow-lg transition hover:bg-gray-200 transform hover:scale-105">교육과정 살펴보기</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="space-y-24 py-24 lg:space-y-32 lg:py-32">
+            
+            <section id="why-us" class="mx-auto max-w-5xl px-5 fade-in">
+                <h2 class="section-title">왜 <span class="accent-text">두잉굿</span>일까요?</h2>
+                <p class="mt-4 text-center text-lg text-gray-600">본질에 집중한 교육은 결과로 증명됩니다.</p>
+                <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     <div class="card p-8 text-center flex flex-col items-center">
                         <div class="icon-bg mb-4">💡</div>
                         <h3 class="text-2xl font-bold mb-2">독자적인 교육 시스템</h3>
-                        <p class="text-gray-600">레고® 에듀케이션의 검증된 교육 철학을 바탕으로, '브릭스토리텔러' 등 자체 융합 프로그램을 더해 발전합니다.</p>
+                        <p class="text-gray-600">레고® 에듀케이션의 브릭큐, 스파이크 등 검증된 교구를 기반으로, '브릭스토리텔러' 등 자체 융합 프로그램을 더해 발전합니다.</p>
                     </div>
                     <div class="card p-8 text-center flex flex-col items-center">
                         <div class="icon-bg mb-4">👩‍🏫</div>
                         <h3 class="text-2xl font-bold mb-2">검증된 리더십</h3>
                         <p class="text-gray-600">25년+ 교육 전문가 주혜란 원장이 직접 이끕니다. KCIA 1위, 교육부 인증으로 증명합니다.</p>
                     </div>
+                    <div class="card p-8 text-center flex flex-col items-center md:col-span-2 lg:col-span-1">
+                         <div class="icon-bg mb-4">🤝</div>
+                        <h3 class="text-2xl font-bold mb-2">함께 성장하는 커뮤니티</h3>
+                        <p class="text-gray-600">학부모 교육 세미나와 지역 사회 공헌 활동을 통해 아이와 부모, 그리고 사회가 함께 성장합니다.</p>
+                    </div>
                 </div>
             </section>
-            
-            <section id="roadmap">
-                <h2 class="text-3xl font-extrabold text-center mb-16">우리 아이의 체계적인 성장 로드맵</h2>
-                <div class="relative timeline mb-12">
-                    <div class="timeline-item mb-16 flex justify-between items-center">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-item-content">
-                             <div class="card p-6">
-                                <p class="text-sm font-bold" style="color: var(--color-primary);">🌱 새싹 단계</p>
-                                <h3 class="text-xl font-bold mb-2">프리스쿨 (Preschool)</h3>
-                                <p class="text-gray-600">놀이를 통해 기초기계 원리를 배우고 창의적 조립으로 소근육을 발달시킵니다.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item mb-16 flex justify-between items-center">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-item-content">
-                             <div class="card p-6">
-                                <p class="text-sm font-bold" style="color: var(--color-accent1);">⚙️ 성장 단계</p>
-                                <h3 class="text-xl font-bold mb-2">스쿨 (School)</h3>
-                                <p class="text-gray-600">지레, 바퀴, 기어 등 과학 원리를 심화하고 문제 해결 능력을 향상시킵니다.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item flex justify-between items-center">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-item-content">
-                            <div class="card p-6">
-                                <p class="text-sm font-bold" style="color: var(--color-accent2);">🤖 심화 단계</p>
-                                <h3 class="text-xl font-bold mb-2">로보틱스 (Robotics)</h3>
-                                <p class="text-gray-600">레고® 로보틱스 키트를 활용하여 블록 코딩, 로봇 설계 및 프로그래밍을 마스터하고 국내외 대회에 도전합니다.</p>
-                           </div>
-                        </div>
-                    </div>
-                </div>
+
+            <section id="programs" class="mx-auto max-w-6xl px-5 fade-in">
+                <h2 class="section-title">두잉굿의 특별한 <span class="accent-text">교육 프로그램</span></h2>
+                <p class="mt-4 text-center text-lg text-gray-600">아이의 잠재력을 깨우는 다채로운 융합 교육을 만나보세요.</p>
                 
-                <div class="relative flex justify-center items-center my-8">
-                    <span class="text-4xl font-bold text-gray-400">+</span>
-                </div>
-
-                <div class="card p-8 md:p-12 text-center max-w-3xl mx-auto border-2" style="border-color: var(--color-accent1); background-color: #FEF6FB;">
-                    <h3 class="text-2xl font-extrabold mb-4"><span style="color: var(--color-accent1);">⭐</span> 모든 성장의 기반, <span class="gradient-text">핵심 융합 프로그램</span></h3>
-                    <p class="text-xl font-bold mb-2">브릭스토리텔러</p>
-                    <p class="text-gray-600">
-                        '브릭스토리텔러'는 특정 학년에 국한되지 않고, 모든 학습 단계에 걸쳐 아이들의 문해력, 표현력, 공감 능력을 키우는 두잉굿의 핵심 융합 과정입니다. 기술 학습과 인문학적 소양을 함께 길러 통합적 인재로 성장시킵니다.
-                    </p>
-                </div>
-            </section>
-
-            <section id="extra-programs">
-                <h2 class="text-3xl font-extrabold text-center mb-12">다채로운 융합 프로그램: 브릭을 넘어 더 넓은 세상으로</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="card p-8 text-center flex flex-col items-center">
-                        <div class="icon-bg mb-4">🎲</div>
-                        <h3 class="text-2xl font-bold mb-2">전략적 사고를 키우는 보드게임</h3>
-                        <p class="text-gray-600">세계 여러 나라의 보드게임을 통해 즐겁게 협동심과 전략적 사고력, 문제 해결 능력을 기릅니다.</p>
-                    </div>
-                    <div class="card p-8 text-center flex flex-col items-center">
-                        <div class="icon-bg mb-4">🔬</div>
-                        <h3 class="text-2xl font-bold mb-2">호기심을 만족시키는 실험과학</h3>
-                        <p class="text-gray-600">직접 만지고 관찰하는 생생한 과학 실험을 통해 탐구 능력을 키우고 과학 원리를 재미있게 체득합니다.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="signature-program" class="card p-8 md:p-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl font-extrabold mb-4">시그니처 프로그램: <span class="gradient-text">브릭스토리텔러</span></h2>
-                        <p class="text-lg font-bold mb-4 text-gray-700">"책을 싫어하는 아이를 위한 특별한 처방전!"</p>
-                        <p class="text-gray-600 mb-6">디지털 시대, 우리 아이에게 가장 필요한 문해력(Literacy)! 책 읽기에 흥미를 잃은 아이들이 자신만의 이야기를 브릭으로 표현하며 독서와 친해지고 표현력을 키우는 독창적인 융합 교육입니다.</p>
-                        <ul class="space-y-3 text-left">
-                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>독서 흥미와 자신감</strong> 동시 향상</li>
-                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>표현력 및 공감 능력</strong> 강화</li>
-                            <li class="flex items-start"><span class="mr-2 mt-1" style="color: var(--color-primary);">✔️</span> <strong>'지도사 과정' 운영</strong>으로 전문성 입증</li>
-                        </ul>
-                    </div>
+                <div class="mt-16 space-y-24">
+                    <!-- Module 1 & 2: STEM -->
                     <div>
-                        <div class="chart-container h-64 md:h-80">
-                            <canvas id="literacyChart"></canvas>
-                        </div>
-                        <p class="text-center text-sm text-gray-500 mt-2">브릭스토리텔러 프로그램의 핵심 목표</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="ai-program" class="card p-8 md:p-12 text-center" style="background-color: #F0F9FF; border-color: #D6EEFF;">
-                 <h2 class="text-3xl font-extrabold mb-4">AI와 만난 브릭: <span class="gradient-text">미래형 창의 융합 교육</span></h2>
-                 <p class="text-gray-600 max-w-3xl mx-auto mb-8">
-                    최신 AI 기술로 상상 속의 이야기를 만들고, 브릭으로 구현하며 코딩으로 생명을 불어넣습니다. 단순한 기술 습득을 넘어, 아이들은 자신만의 스토리를 창조하는 미래의 크리에이터가 됩니다.
-                 </p>
-                 <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-2 max-w-5xl mx-auto">
-                    <!-- Step 1 -->
-                    <div class="flex-1 flex flex-col items-center text-center p-2">
-                        <div class="icon-bg mb-2">🧠</div>
-                        <h3 class="text-xl font-bold">1. AI 스토리 생성</h3>
-                        <p class="text-sm text-gray-600 mt-1">AI와 대화하며 세상에 없던 이야기를 만들어요.</p>
-                    </div>
-                    <!-- Separator -->
-                    <div class="hidden md:block text-4xl font-light mx-2" style="color: var(--color-primary);">›</div>
-                    <!-- Step 2 -->
-                    <div class="flex-1 flex flex-col items-center text-center p-2">
-                        <div class="icon-bg mb-2">🧱</div>
-                        <h3 class="text-xl font-bold">2. 브릭 모델링</h3>
-                        <p class="text-sm text-gray-600 mt-1">이야기 속 주인공과 배경을 직접 조립해요.</p>
-                    </div>
-                     <!-- Separator -->
-                    <div class="hidden md:block text-4xl font-light mx-2" style="color: var(--color-primary);">›</div>
-                     <!-- Step 3 -->
-                     <div class="flex-1 flex flex-col items-center text-center p-2">
-                        <div class="icon-bg mb-2">⚙️</div>
-                        <h3 class="text-xl font-bold">3. 코딩으로 구현</h3>
-                        <p class="text-sm text-gray-600 mt-1">코딩으로 모델을 움직여 스토리를 완성해요.</p>
-                    </div>
-                 </div>
-                 <p class="mt-8 font-semibold" style="color: var(--color-primary);">창의력, 문제 해결 능력, 그리고 미래 기술 리터러시를 한번에!</p>
-            </section>
-
-            <section id="results">
-                <h2 class="text-3xl font-extrabold text-center mb-12">결과로 증명하는 성공의 역사</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="card p-8 flex flex-col">
-                        <h3 class="text-2xl font-bold mb-4 text-center">🏆 세계가 인정한 실력, 빛나는 수상 실적</h3>
-                        <p class="text-center text-gray-600 mb-6">2008년부터 16년 이상, 국내를 넘어 세계 무대에서 꾸준히 성과를 거두며 교육 경쟁력을 증명하고 있습니다. <span class="font-bold accent-text">특히 2024년에는 RoboCup 아시아-태평양 대회 1, 2위를 석권</span>하며 다시 한번 세계적인 수준을 입증했습니다.</p>
-                        
-                        <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 text-center mb-6">
-                             <div class="bg-gray-100 p-4 rounded-lg">
-                                <p class="text-3xl font-black accent-text">1위</p>
-                                <p class="text-sm font-bold text-gray-600">2024 RoboCup 아-태</p>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">핵심 성장 과정: 단계별 STEM 역량 강화</h3>
+                        <div class="space-y-8">
+                            <div class="card p-8 lg:p-12">
+                                <div class="grid md:grid-cols-2 gap-8 items-center">
+                                     <div>
+                                        <h4 class="text-2xl font-bold text-primary">기초 과학과 코딩의 만남</h4>
+                                        <p class="mt-4 text-gray-600">레고® 브릭큐 모션 에센셜로 힘, 운동 등 물리 과학의 기초를 배우고, 스파이크 에센셜을 통해 아이콘 코딩의 세계를 처음 만납니다. 과학적 원리와 디지털 역량을 동시에 키우는 첫걸음입니다.</p>
+                                     </div>
+                                     <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">브릭큐 모션 에센셜</p><p class="text-sm mt-1">물리 과학</p></div>
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크 에센셜</p><p class="text-sm mt-1">아이콘 코딩</p></div>
+                                     </div>
+                                </div>
                             </div>
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <p class="text-3xl font-black gradient-text">1위</p>
-                                <p class="text-sm font-bold text-gray-600">2019 RoboCup 세계</p>
-                            </div>
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <p class="text-3xl font-black gradient-text">수상</p>
-                                <p class="text-sm font-bold text-gray-600">2016 FLL Nature's Fury</p>
-                            </div>
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <p class="text-3xl font-black gradient-text">4위</p>
-                                <p class="text-sm font-bold text-gray-600">2013 WRO 세계</p>
-                            </div>
-                        </div>
-
-                        <div class="chart-container h-48 md:h-56 w-full max-w-full">
-                            <canvas id="awardsTrendChart"></canvas>
-                        </div>
-                         <p class="text-center text-xs text-gray-500 mt-1">연도별 주요 대회 수상 실적 추이</p>
-
-                    </div>
-                    <div class="card p-8 flex flex-col justify-center items-center text-center">
-                         <h3 class="text-2xl font-bold mb-4">🎓 레고에서 공학자의 꿈으로</h3>
-                         <p class="text-gray-600 mb-6">유치원 시절부터 함께한 서O원 학생, <br class="hidden sm:block"/><strong>서강대학교 기계공학과</strong>에 당당히 입학했습니다!</p>
-                        <div class="w-full max-w-sm">
-                            <div class="relative pt-[100%]">
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center" style="background-color: #FFF9C4;">
-                                         <span class="text-4xl md:text-5xl">🧒</span>
-                                    </div>
-                                    <div class="text-5xl font-thin mx-4" style="color: var(--color-accent2);">→</div>
-                                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center" style="background-color: #E0F7FA;">
-                                         <span class="text-4xl md:text-5xl">🧑‍🔧</span>
-                                    </div>
+                             <div class="card p-8 lg:p-12">
+                                <div class="grid md:grid-cols-2 gap-8 items-center">
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-accent-1">심화 과학과 텍스트 코딩으로의 도약</h4>
+                                        <p class="mt-4 text-gray-600">브릭큐 모션 프라임으로 에너지 변환과 같은 심화 물리·과학 개념을 탐구하고, 스파이크 프라임으로 스크래치(블록)와 Python(텍스트) 코딩을 모두 활용하며 자율 로봇 설계를 배워 대회 수준의 실력을 갖춥니다.</p>
+                                     </div>
+                                     <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">브릭큐 모션 프라임</p><p class="text-sm mt-1">심화 과학</p></div>
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크 프라임</p><p class="text-sm mt-1">블록/텍스트 코딩</p></div>
+                                     </div>
                                 </div>
                             </div>
                         </div>
-                         <p class="mt-6 font-semibold text-gray-700">놀이가 어떻게 꿈이 되고, 미래를 위한 투자가 되는지<br>그 성장 스토리가 증명합니다.</p>
-                         <a href="https://youtu.be/vZqx-VJ2Di4" target="_blank" class="mt-4 inline-block text-teal-800 font-bold py-2 px-5 rounded-full text-sm shadow-md transition-all" style="background-color: #CFFAFE; hover:background-color: #A5F3FC;">
-                            ▶︎ 성공 스토리 영상 보기
-                        </a>
+                    </div>
+
+                    <!-- Module 3: Signature Program -->
+                    <div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">시그니처 프로그램: 생각을 만들고, 이야기로 표현하는 힘</h3>
+                         <div class="card p-8 lg:p-12 border-2" style="border-color: var(--color-accent-1); background-color: #FEF6FB;">
+                            <div class="grid md:grid-cols-2 gap-8 items-center">
+                                <div>
+                                    <h4 class="text-2xl font-extrabold"><span class="accent-text">브릭스토리텔러</span></h4>
+                                    <p class="text-lg font-bold mt-2 mb-4 text-gray-700">"책을 싫어하는 아이를 위한 특별한 처방전!"</p>
+                                    <p class="text-gray-600">디지털 시대, 우리 아이에게 가장 필요한 문해력(Literacy)! 책 읽기에 흥미를 잃은 아이들이 자신만의 이야기를 브릭으로 표현하며 독서와 친해지고 표현력을 키우는 독창적인 융합 교육입니다. '지도사 과정' 운영을 통해 전문성까지 입증했습니다.</p>
+                                </div>
+                                <div class="text-center font-bold text-lg bg-white/50 p-4 rounded-lg">문해력, 표현력, 공감 능력<br/><span class="text-sm font-medium">그리고 창의력까지!</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Module 4: Convergence -->
+                     <div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">융합 선택 프로그램: 브릭을 넘어 더 넓은 세상으로</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                           <div class="card p-8 text-center"><div class="icon-bg mx-auto mb-4">🤖</div><h3 class="text-xl font-bold mb-2">AI 융합 교육</h3><p class="text-sm text-gray-600">최신 AI 기술로 상상 속의 이야기를 만들고, 브릭으로 구현하며 코딩으로 생명을 불어넣습니다.</p></div>
+                           <div class="card p-8 text-center"><div class="icon-bg mx-auto mb-4">🎲</div><h3 class="text-xl font-bold mb-2">보드게임</h3><p class="text-sm text-gray-600">세계 여러 나라의 보드게임을 통해 즐겁게 협동심과 전략적 사고력, 문제 해결 능력을 기릅니다.</p></div>
+                           <div class="card p-8 text-center"><div class="icon-bg mx-auto mb-4">🔬</div><h3 class="text-xl font-bold mb-2">실험과학</h3><p class="text-sm text-gray-600">직접 만지고 관찰하는 생생한 과학 실험을 통해 탐구 능력을 키우고 과학 원리를 재미있게 체득합니다.</p></div>
+                       </div>
                     </div>
                 </div>
             </section>
             
-            <section id="contact" class="text-center py-12">
-                <h2 class="text-3xl font-extrabold mb-4">지금 바로, 우리 아이의 미래를 만나보세요!</h2>
-                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">부담 없이 두잉굿의 특별한 교육을 경험해보세요. <br class="hidden sm:block"/>가까운 센터로 문의하시면 전문가의 상담이 언제나 열려 있습니다.</p>
-                 <div class="text-center mb-10">
-                    <a href="https://blog.naver.com/doing_good_" target="_blank" class="inline-block font-bold py-3 px-6 rounded-full text-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300" style="color:white; background-color: var(--color-primary);">
-                        "두잉굿 공식 블로그에서 더 많은 소식을 만나보세요!"
-                    </a>
-                 </div>
-                
-                <div class="mb-12">
-                    <h3 class="text-2xl font-bold text-center mb-6">전국 두잉굿 네트워크</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-gray-700 px-4">
-                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
-                            <div>
-                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">대전 도안러닝센터</p>
-                                <p class="mt-2 text-sm leading-relaxed">대전 서구 동서대로 696,<br>FM프라임 2차 503호</p>
-                                <p class="mt-4 font-mono text-lg">📞 042-825-8053</p>
-                            </div>
-                            <a href="https://blog.naver.com/leo8053" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
+            <section id="results" class="mx-auto max-w-5xl px-5 fade-in">
+                <h2 class="section-title">결과로 증명하는 <span class="accent-text">성공의 역사</span></h2>
+                <div class="mt-16 space-y-8">
+                    <div class="card p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-4 text-center">🏆 세계가 인정한 실력, 빛나는 수상 실적</h3>
+                        <p class="text-center text-gray-600 mb-6">2008년부터 16년 이상, 국내를 넘어 세계 무대에서 꾸준히 성과를 거두며 교육 경쟁력을 증명하고 있습니다. <span class="font-bold accent-text">특히 2024년에는 RoboCup 아시아-태평양 대회 1, 2위를 석권</span>하며 다시 한번 세계적인 수준을 입증했습니다.</p>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                             <div class="bg-gray-100 p-4 rounded-lg"><p class="text-3xl font-black accent-text">1위</p><p class="text-sm font-bold text-gray-600">2024 RoboCup 아-태</p></div>
+                             <div class="bg-gray-100 p-4 rounded-lg"><p class="text-3xl font-black text-primary">1위</p><p class="text-sm font-bold text-gray-600">2019 RoboCup 세계</p></div>
+                             <div class="bg-gray-100 p-4 rounded-lg"><p class="text-3xl font-black text-primary">수상</p><p class="text-sm font-bold text-gray-600">2016 FLL Nature's Fury</p></div>
+                             <div class="bg-gray-100 p-4 rounded-lg"><p class="text-3xl font-black text-primary">4위</p><p class="text-sm font-bold text-gray-600">2013 WRO 세계</p></div>
                         </div>
-                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
-                            <div>
-                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">대전 대덕창의교습소</p>
-                                <p class="mt-2 text-sm leading-relaxed">대전 서구 관저남로 20,<br>102호</p>
-                                <p class="mt-4 font-mono text-lg">📞 042-625-8980</p>
-                            </div>
-                            <a href="https://blog.naver.com/ranchoran75" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
-                        </div>
-                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
-                            <div>
-                               <p class="font-extrabold text-lg" style="color: var(--color-primary);">세종 러닝센터</p>
-                               <p class="mt-2 text-sm leading-relaxed">세종 남세종로 466,<br>아평빌딩 7층 703호</p>
-                               <p class="mt-4 font-mono text-lg">📞 044-865-8054</p>
-                            </div>
-                            <a href="https://blog.naver.com/leoleo8054" target="_blank" class="mt-4 text-sm font-bold hover:underline accent-text">블로그 보기</a>
-                        </div>
-                        <div class="p-6 rounded-lg bg-gray-50 border border-gray-200 text-center flex flex-col justify-between h-full">
-                            <div>
-                                <p class="font-extrabold text-lg" style="color: var(--color-primary);">논산 러닝센터</p>
-                                <p class="mt-2 text-sm leading-relaxed">충남 논산시 시민로 181,<br>2층 201호</p>
-                                <p class="mt-4 font-mono text-lg">📞 041-734-7787</p>
-                            </div>
-                            <a href="#" class="mt-4 text-sm font-bold text-gray-400 cursor-not-allowed">블로그 준비중</a>
+                    </div>
+                    <div class="card p-8 flex flex-col justify-center items-center text-center">
+                         <h3 class="text-2xl font-bold mb-4">🎓 레고에서 공학자의 꿈으로</h3>
+                         <p class="text-gray-600 mb-4">유치원 시절부터 함께한 서O원 학생, <strong>서강대학교 기계공학과</strong>에 당당히 입학했습니다!</p>
+                         <p class="text-gray-500 italic mb-6">"유치원 시절 레고 블록을 쌓던 손으로,<br>이제는 대한민국의 미래 기술을 만듭니다."</p>
+                        <div class="aspect-video w-full max-w-xl mx-auto overflow-hidden rounded-lg shadow-lg">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/vZqx-VJ2Di4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
+            </section>
+        </div>
+    </main>
 
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white pt-20 pb-10">
+        <div class="mx-auto max-w-6xl px-5">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-white">지금 바로, 우리 아이의 미래를 만나보세요!</h2>
+                <p class="mt-4 text-gray-300">가까운 센터로 문의하시면 전문가의 상담이 언제나 열려 있습니다.</p>
+                <div class="mt-8">
+                    <a href="https://blog.naver.com/doing_good_" target="_blank" class="inline-block font-bold py-3 px-6 rounded-full text-lg shadow-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 bg-primary hover:opacity-90">"두잉굿 공식 블로그에서 더 많은 소식을 만나보세요!"</a>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-center mb-8 text-white">전국 두잉굿 네트워크</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-gray-300">
+                    <div class="p-6 rounded-lg bg-gray-700/50 text-center flex flex-col justify-between h-full"><p class="font-extrabold text-lg text-primary">대전 도안러닝센터</p><p class="mt-2 text-sm leading-relaxed">대전 서구 동서대로 696,<br>FM프라임 2차 503호</p><p class="mt-4 font-mono text-lg">📞 042-825-8053</p><a href="https://blog.naver.com/leo8053" target="_blank" class="mt-4 text-sm font-bold text-accent-1 hover:underline">블로그 보기</a></div>
+                    <div class="p-6 rounded-lg bg-gray-700/50 text-center flex flex-col justify-between h-full"><p class="font-extrabold text-lg text-primary">대전 대덕창의교습소</p><p class="mt-2 text-sm leading-relaxed">대전 서구 관저남로 20,<br>102호</p><p class="mt-4 font-mono text-lg">📞 042-625-8980</p><a href="https://blog.naver.com/ranchoran75" target="_blank" class="mt-4 text-sm font-bold text-accent-1 hover:underline">블로그 보기</a></div>
+                    <div class="p-6 rounded-lg bg-gray-700/50 text-center flex flex-col justify-between h-full"><p class="font-extrabold text-lg text-primary">세종 러닝센터</p><p class="mt-2 text-sm leading-relaxed">세종 남세종로 466,<br>아평빌딩 7층 703호</p><p class="mt-4 font-mono text-lg">📞 044-865-8054</p><a href="https://blog.naver.com/leoleo8054" target="_blank" class="mt-4 text-sm font-bold text-accent-1 hover:underline">블로그 보기</a></div>
+                    <div class="p-6 rounded-lg bg-gray-700/50 text-center flex flex-col justify-between h-full"><p class="font-extrabold text-lg text-primary">논산 러닝센터</p><p class="mt-2 text-sm leading-relaxed">충남 논산시 시민로 181,<br>2층 201호</p><p class="mt-4 font-mono text-lg">📞 041-734-7787</p><a href="#" class="mt-4 text-sm font-bold text-gray-500 cursor-not-allowed">블로그 준비중</a></div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-10 text-center">
+                <h3 class="text-xl font-bold mb-6">무료체험수업 신청</h3>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSf0AnABH21Rhmm3KPuwZ28QPtHp1YVqHub77iD6l5dODpVW_A/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-gray-900 font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" style="background-color: var(--color-accent2);">
+                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSf0AnABH21Rhmm3KPuwZ28QPtHp1YVqHub77iD6l5dODpVW_A/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-gray-900 font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 bg-accent-2">
                         🎁 대전지역 무료체험수업 신청
                     </a>
-                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSc818L0XSL-qTmiAlbBnhQvIYhtmS5kl8sKGpeE8y44xFziwg/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" style="background-color: var(--color-accent1);">
+                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSc818L0XSL-qTmiAlbBnhQvIYhtmS5kl8sKGpeE8y44xFziwg/viewform?usp=header" target="_blank" class="w-full sm:w-auto inline-block text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 bg-accent-1">
                         🎁 세종지역 무료체험수업 신청
                     </a>
                 </div>
-            </section>
-        </main>
-    </div>
+                <p class="mt-12 text-sm text-gray-400">&copy; 2024 Doingood. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
 
     <script>
-        const THEME_COLORS = {
-            primary: 'rgba(0, 169, 183, 1)',
-            accent1: 'rgba(217, 0, 126, 1)',
-            accent2: 'rgba(255, 199, 0, 1)',
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
 
-        const tooltipTitleCallback = (tooltipItems) => {
-            const item = tooltipItems[0];
-            let label = item.chart.data.labels[item.dataIndex];
-            if (Array.isArray(label)) {
-                return label.join(' ');
-            }
-            return label;
-        };
-        
-        const sharedChartOptions = {
-             maintainAspectRatio: false,
-             responsive: true,
-             plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            family: "'Noto Sans KR', sans-serif",
-                            size: 12,
-                        }
+            // Smooth scroll for all anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
                     }
-                },
-                tooltip: {
-                    titleFont: { family: "'Noto Sans KR', sans-serif" },
-                    bodyFont: { family: "'Noto Sans KR', sans-serif" },
-                    callbacks: {
-                        title: tooltipTitleCallback
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Fade-in animation on scroll
+            const faders = document.querySelectorAll('.fade-in');
+            const appearOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+
+            // Header shadow on scroll
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow-md');
+                } else {
+                    header.classList.remove('shadow-md');
                 }
-            }
-        };
-
-        const ctxLiteracy = document.getElementById('literacyChart').getContext('2d');
-        new Chart(ctxLiteracy, {
-            type: 'doughnut',
-            data: {
-                labels: ['문해력', '표현력', '공감능력', '창의력', '독서흥미'],
-                datasets: [{
-                    label: '핵심 목표',
-                    data: [30, 25, 20, 15, 10],
-                    backgroundColor: [
-                        THEME_COLORS.primary,
-                        THEME_COLORS.accent1,
-                        THEME_COLORS.accent2,
-                        '#4ade80', // green-400
-                        '#f97316'  // orange-500
-                    ],
-                    borderColor: '#ffffff',
-                    borderWidth: 4
-                }]
-            },
-            options: {
-                ...sharedChartOptions,
-                cutout: '60%',
-            }
-        });
-
-        const ctxAwardsTrend = document.getElementById('awardsTrendChart').getContext('2d');
-        const gradient = ctxAwardsTrend.createLinearGradient(0, 0, 0, 150);
-        gradient.addColorStop(0, 'rgba(0, 169, 183, 0.5)');
-        gradient.addColorStop(1, 'rgba(0, 169, 183, 0)');
-
-        new Chart(ctxAwardsTrend, {
-            type: 'line',
-            data: {
-                labels: ['2013', '2015', '2016', '2017', '2019', '2020', '2022', '2023', '2024'],
-                datasets: [{
-                    label: '주요 수상',
-                    data: [3, 2, 3, 4, 3, 2, 3, 2, 3], // Approximate count of major awards
-                    backgroundColor: gradient,
-                    borderColor: THEME_COLORS.primary,
-                    pointBackgroundColor: THEME_COLORS.primary,
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: THEME_COLORS.primary,
-                    borderWidth: 2,
-                    tension: 0.3,
-                    fill: true,
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                         ticks: {
-                            stepSize: 1
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            title: function(tooltipItems) {
-                                return tooltipItems[0].label + '년 주요 대회';
-                            },
-                            label: function(context) {
-                                return '수상 ' + context.parsed.y + '건 이상';
-                            }
-                        }
-                    }
-                }
-            }
+            });
         });
     </script>
 </body>
