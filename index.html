@@ -6,6 +6,7 @@
     <title>두잉굿 | 우리 아이의 가능성이 현실이 되는 곳</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -125,19 +126,19 @@
                 <p class="mt-4 text-center text-lg text-gray-600">아이의 잠재력을 깨우는 다채로운 융합 교육을 만나보세요.</p>
                 
                 <div class="mt-16 space-y-24">
-                    <!-- Module 1 & 2: STEM -->
+                    <!-- Module 1 & 2: STEAM -->
                     <div>
-                        <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">핵심 성장 과정: 단계별 STEM 역량 강화</h3>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">핵심 성장 과정: 단계별 STEAM 역량 강화</h3>
                         <div class="space-y-8">
                             <div class="card p-8 lg:p-12">
                                 <div class="grid md:grid-cols-2 gap-8 items-center">
                                      <div>
                                         <h4 class="text-2xl font-bold text-primary">기초 과학과 코딩의 만남</h4>
-                                        <p class="mt-4 text-gray-600">레고® 브릭큐 모션 에센셜로 힘, 운동 등 물리 과학의 기초를 배우고, 스파이크 에센셜을 통해 아이콘 코딩의 세계를 처음 만납니다. 과학적 원리와 디지털 역량을 동시에 키우는 첫걸음입니다.</p>
+                                        <p class="mt-4 text-gray-600">레고® 브릭큐 모션 에센셜로 힘, 운동 등 물리 과학의 기초를 배우고, 스파이크™ 에센셜을 통해 아이콘 코딩의 세계를 처음 만납니다. 과학적 원리와 디지털 역량을 동시에 키우는 첫걸음입니다.</p>
                                      </div>
                                      <div class="grid grid-cols-2 gap-4">
                                         <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">브릭큐 모션 에센셜</p><p class="text-sm mt-1">물리 과학</p></div>
-                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크 에센셜</p><p class="text-sm mt-1">아이콘 코딩</p></div>
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크™ 에센셜</p><p class="text-sm mt-1">아이콘 코딩</p></div>
                                      </div>
                                 </div>
                             </div>
@@ -145,11 +146,11 @@
                                 <div class="grid md:grid-cols-2 gap-8 items-center">
                                     <div>
                                         <h4 class="text-2xl font-bold text-accent-1">심화 과학과 텍스트 코딩으로의 도약</h4>
-                                        <p class="mt-4 text-gray-600">브릭큐 모션 프라임으로 에너지 변환과 같은 심화 물리·과학 개념을 탐구하고, 스파이크 프라임으로 스크래치(블록)와 Python(텍스트) 코딩을 모두 활용하며 자율 로봇 설계를 배워 대회 수준의 실력을 갖춥니다.</p>
+                                        <p class="mt-4 text-gray-600">브릭큐 모션 프라임으로 에너지 변환과 같은 심화 물리·과학 개념을 탐구하고, 스파이크™ 프라임으로 스크래치(블록)와 Python(텍스트) 코딩을 모두 활용하며 자율 로봇 설계를 배워 대회 수준의 실력을 갖춥니다.</p>
                                      </div>
                                      <div class="grid grid-cols-2 gap-4">
                                         <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">브릭큐 모션 프라임</p><p class="text-sm mt-1">심화 과학</p></div>
-                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크 프라임</p><p class="text-sm mt-1">블록/텍스트 코딩</p></div>
+                                        <div class="bg-gray-100 p-4 rounded-lg text-center"><p class="font-bold">스파이크™ 프라임</p><p class="text-sm mt-1">블록/텍스트 코딩</p></div>
                                      </div>
                                 </div>
                             </div>
@@ -159,14 +160,16 @@
                     <!-- Module 3: Signature Program -->
                     <div>
                         <h3 class="text-2xl lg:text-3xl font-bold text-center mb-10">시그니처 프로그램: 생각을 만들고, 이야기로 표현하는 힘</h3>
-                         <div class="card p-8 lg:p-12 border-2" style="border-color: var(--color-accent-1); background-color: #FEF6FB;">
-                            <div class="grid md:grid-cols-2 gap-8 items-center">
-                                <div>
+                         <div class="card overflow-hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 items-center">
+                                 <div class="p-8 lg:p-12">
                                     <h4 class="text-2xl font-extrabold"><span class="accent-text">브릭스토리텔러</span></h4>
                                     <p class="text-lg font-bold mt-2 mb-4 text-gray-700">"책을 싫어하는 아이를 위한 특별한 처방전!"</p>
                                     <p class="text-gray-600">디지털 시대, 우리 아이에게 가장 필요한 문해력(Literacy)! 책 읽기에 흥미를 잃은 아이들이 자신만의 이야기를 브릭으로 표현하며 독서와 친해지고 표현력을 키우는 독창적인 융합 교육입니다. '지도사 과정' 운영을 통해 전문성까지 입증했습니다.</p>
                                 </div>
-                                <div class="text-center font-bold text-lg bg-white/50 p-4 rounded-lg">문해력, 표현력, 공감 능력<br/><span class="text-sm font-medium">그리고 창의력까지!</span></div>
+                                <div class="bg-gray-100 h-full flex items-center justify-center p-8 min-h-[300px]">
+                                   <div class="w-full max-w-sm"><canvas id="literacyChart"></canvas></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +250,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        window.onload = function() {
             // Mobile Menu Toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -308,7 +311,34 @@
                     header.classList.remove('shadow-md');
                 }
             });
-        });
+            
+            // Chart.js - Literacy Chart
+            const ctxLiteracy = document.getElementById('literacyChart');
+            if(ctxLiteracy) {
+                new Chart(ctxLiteracy.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['문해력', '표현력', '공감능력', '창의력', '독서흥미'],
+                        datasets: [{
+                            label: '핵심 목표',
+                            data: [30, 25, 20, 15, 10],
+                            backgroundColor: ['#00A9B7', '#D9007E', '#FFC700', '#4ade80', '#f97316'],
+                            borderColor: '#ffffff',
+                            borderWidth: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: { callbacks: { title: (ctx) => ctx[0].label } }
+                        },
+                        cutout: '60%',
+                    }
+                });
+            }
+        };
     </script>
 </body>
 </html>
